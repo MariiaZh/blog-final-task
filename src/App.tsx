@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
+//import Authentication from './screens/Authentication';
+import ArticlesScreen from './screens/ArticlesScreen';
+import Header from './components/Header';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    // I'll add routing here later
+
+    return (
+        <Fragment>
+            <Header />
+            {/*<HomeScreen />*/}
+            <ArticlesScreen />
+        </Fragment>
+    );
 }
 
 export default App;
