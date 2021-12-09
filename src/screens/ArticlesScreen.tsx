@@ -1,35 +1,18 @@
 import React, { useState } from "react";
 import dummy_users from "../models/dummy_users";
 import dummy_posts from "../models/dummy_posts";
-import { Tabs, Tab, Typography, Box } from '@mui/material';
+import { Tabs, Tab, Box } from '@mui/material';
 import PreviewCard from '../components/PreviewCard';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Article from '../models/Article';
 
 // Later logic of genres will be work with reducers
 
-type Comment = {
-    author: boolean,
-    nickName: string,
-    date: string,
-    text: string
-}
-
-type ArticleBlock = {
-    authorId: string;
-    image: string;
-    title: string;
-    text: string;
-    date: string;
-    categories: string[];
-    comments: Comment[];
-    likes: number;
-}
-
-const lastAddedList: ArticleBlock[] = [];
-const mostLikedList: ArticleBlock[] = dummy_posts.sort((a, b) => a.likes < b.likes ? 1 : -1);
-let genreSortedList: ArticleBlock[] = [];
+const lastAddedList: Article[] = [];
+const mostLikedList: Article[] = dummy_posts.sort((a, b) => a.likes < b.likes ? 1 : -1);
+let genreSortedList: Article[] = [];
 
 for (let i = 4; i > 0; i--) {
     lastAddedList.push(dummy_posts[dummy_posts.length - i]);
@@ -53,7 +36,7 @@ function TabPanel(props: TabPanelProps) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <Box>{children}</Box>
                 </Box>
             )}
         </div>
@@ -70,8 +53,7 @@ function a11yProps(index: number) {
 const genresArray: string[] = ['Action', "Mystery", 'Thriller', "Drama", 'Fantasy', 'Horror', 'Comedy', 'Adventure', 'Biography', "History",
 ];
 
-
-const ArticlesScreen = () => {
+const ArticlesScreen: React.FC = () => {
     const [value, setValue] = useState(0);
     const [isGenreTab, setIsGenreTab] = useState(false);
 
@@ -140,10 +122,10 @@ const ArticlesScreen = () => {
                             postAuthor = "Incognita";
                         }
                         const postText = post.text.split('.');
-                        const postTitle = post.title.split(' ');
                         return (
                             <PreviewCard
-                                key={postTitle[0] + post.date}
+                                key={post.id}
+                                id={post.id}
                                 title={post.title}
                                 text={postText[0] + '...'}
                                 likes={post.likes}
@@ -163,10 +145,10 @@ const ArticlesScreen = () => {
                             postAuthor = "Incognita";
                         }
                         const postText = post.text.split('.');
-                        const postTitle = post.title.split(' ');
                         return (
                             <PreviewCard
-                                key={postTitle[0] + post.date}
+                                key={post.id}
+                                id={post.id}
                                 title={post.title}
                                 text={postText[0] + '...'}
                                 likes={post.likes}
@@ -186,10 +168,10 @@ const ArticlesScreen = () => {
                             postAuthor = "Incognita";
                         }
                         const postText = post.text.split('.');
-                        const postTitle = post.title.split(' ');
                         return (
                             <PreviewCard
-                                key={postTitle[0] + post.date}
+                                key={post.id}
+                                id={post.id}
                                 title={post.title}
                                 text={postText[0] + '...'}
                                 likes={post.likes}
@@ -202,6 +184,7 @@ const ArticlesScreen = () => {
                 </Box>
             </TabPanel>
         </Box >
+
     );
 }
 

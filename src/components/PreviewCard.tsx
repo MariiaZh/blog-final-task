@@ -1,37 +1,54 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Button, Typography, Container, Box } from '@mui/material';
+import { Typography, Container, Box, Card, CardMedia } from '@mui/material';
+import { Link } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import useStyles from './styles/PreviewCardStyles';
+import { pink } from '@mui/material/colors';
 
-function PreviewCard(props: any) {
+interface CardProps {
+    id: string,
+    image: string,
+    title: string,
+    author: string,
+    text: string,
+    date: string,
+    likes: number,
+}
+
+const PreviewCard: React.FC<CardProps> = (props) => {
+    const classes = useStyles();
 
     return (
-        <Card sx={{ maxWidth: 450, minHeight: 450, }} style={{ margin: 15, boxShadow: "5px 4px 4px gray, -3px 4px 4px gray", }}>
+        <Card className={classes.root}>
             <CardMedia
                 component="img"
                 height="250"
                 image={props.image}
                 alt={props.title}
             />
-            <CardContent>
-                <Typography variant="body1" gutterBottom color="text.primary">
+            <Container>
+                <Typography variant="body1" color="text.primary" className={classes.author}>
                     By {props.author}
                 </Typography>
-                <Typography gutterBottom variant="h5" component="div" style={{ textAlign: "center" }}>
+                <Typography gutterBottom variant="h5" component="div" className={classes.title}>
                     {props.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    {props.text} <Button size="small">read all</Button>
+                <Typography variant="body2" className={classes.text}>
+                    {props.text}
+                    <Link to={`${props.id}`} >
+                        read all
+                    </Link>
                 </Typography>
-                <Container style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <Box style={{ display: 'flex' }}>
-                        <FavoriteIcon />
-                        <Typography style={{ marginLeft: 10 }}>{props.likes}</Typography>
-                    </Box>
-
-                    <Typography>{props.date}</Typography>
-                </Container>
-            </CardContent>
+            </Container>
+            <Container className={classes.container} >
+                <Box className={classes.box}>
+                    <FavoriteIcon sx={{ color: pink[500] }} />
+                    <Typography className={classes.likesValue}>{props.likes}</Typography>
+                </Box>
+                <Typography>{props.date}</Typography>
+            </Container>
         </Card>
+
     );
 }
 

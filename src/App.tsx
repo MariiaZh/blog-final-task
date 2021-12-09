@@ -1,19 +1,23 @@
-import React, { Fragment } from 'react';
-//import Authentication from './screens/Authentication';
+
+import { Route, Routes } from "react-router-dom";
+import Layout from './components/Layout';
+
 import ArticlesScreen from './screens/ArticlesScreen';
-import Header from './components/Header';
-import './App.css';
+import FullArticleScreen from "./screens/FullArticleScreen";
+import HomeScreen from './screens/HomeScreen';
+//import Authentication from './screens/Authentication';
+
 
 function App() {
-
-    // I'll add routing here later
-
     return (
-        <Fragment>
-            <Header />
-            {/*<HomeScreen />*/}
-            <ArticlesScreen />
-        </Fragment>
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route path="/" element={<ArticlesScreen />} />
+                <Route path="articles" element={<ArticlesScreen />} />
+                <Route path=':id' element={<FullArticleScreen />} />
+                <Route path="home" element={<HomeScreen />} />
+            </Route>
+        </Routes >
     );
 }
 

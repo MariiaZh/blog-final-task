@@ -1,6 +1,8 @@
+import Article from "./Article";
 
-const dummy_posts = [
+const dummy_posts: Article[] = [
     {
+        id: "2845",
         authorId: '01',
         image: 'https://resizing.flixster.com/_CAENim1mgBQ_idwbEkGMaaALpA=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzMzYWI2MmEyLWMxOWEtNDNjMC05NTdhLTUzYjFlNDA2MjJjZi5qcGc=',
         title: "‘House of Gucci’ is Oddly Dull Whenever Jared Leto is Offscreen",
@@ -21,6 +23,7 @@ const dummy_posts = [
             text: "Hi, I'm Troy McClure. You may remember me from such nature films as Earwigs: Eww! and Man vs. Nature: The Road to Victory."
         }]
     }, {
+        id: "3467",
         authorId: '01',
         image: 'https://resizing.flixster.com/jn6m-kKR02vAJcltjQG4RRAkxAs=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzdlZDQzYmMzLTIyNWItNGFkZC05NjE0LTNmNzQxZjE3ZjZmOC5qcGc=',
         title: '‘Red Notice’ plays like ‘Blue’s Clues’ for grown-ups',
@@ -41,6 +44,7 @@ const dummy_posts = [
             text: "Gadot seems to be having the most fun here, letting out the evil side that we never see her display as Wonder Woman. But even with her wrapping a sensuous leg around Johnson on a dance floor, there's no chemistry on view."
         }]
     }, {
+        id: "5782",
         authorId: '02',
         image: "https://resizing.flixster.com/I5Dc_ap83-ESRwtIPPFtFvdjpqs=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2MzZmQ1Y2VlLTQ2NTAtNDY0Zi1iY2RhLTE4MjFiNzMyZGI4MS5qcGc=",
         title: "House of Gucci. It should be called House of Gaga.",
@@ -62,6 +66,7 @@ const dummy_posts = [
         }],
     },
     {
+        id: "9263",
         authorId: '02',
         image: 'https://resizing.flixster.com/pYD-MzrUnpM0O-veslSo-p3F0Zk=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzg2MmYxOWU4LTkxNDYtNDdlNi05NTExLTI5MWJkMWUzZjViNi5qcGc=',
         title: "Last Night in Soho",
@@ -83,6 +88,7 @@ const dummy_posts = [
         },
         ]
     }, {
+        id: "7914",
         authorId: '02',
         image: 'https://flxt.tmsimg.com/assets/p20418376_k_h8_ab.jpg',
         title: "Lamb",
@@ -104,6 +110,7 @@ const dummy_posts = [
         },
         ]
     }, {
+        id: "8524",
         authorId: '03',
         image: "https://resizing.flixster.com/tcwY_VN19sHIA_YEz0OHj6ED-T0=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2RjNDliODg2LTI5OTMtNDg4Yy1iZmY4LThhODU4ZWFmY2I1Zi5qcGc=",
         title: "'King Richard' is a Will Smith showpiece, but it could have been more",
@@ -125,6 +132,7 @@ const dummy_posts = [
         },
         ]
     }, {
+        id: "1543",
         authorId: '03',
         image: "https://resizing.flixster.com/TmkoIDGxTtfwCxgHVbCe03sHuas=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2EzZDFkM2Y2LTE2ZjctNDljZi04YTc5LTg5MGFhNTBmYjA0Yy5qcGc=",
         title: "'Ghostbusters: Afterlife' is a soulless ode to nepotism",
@@ -146,6 +154,7 @@ const dummy_posts = [
         },
         ]
     }, {
+        id: "6720",
         authorId: '03',
         image: "https://resizing.flixster.com/o6JENOOsq3oha0PYNxzuihgPiMg=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzL2E1ZjYwMDk1LWNkMWQtNDY3NS05YjA5LTMwY2EyZDA5OGZiZS5qcGc=",
         title: "The Green Knight Review",
