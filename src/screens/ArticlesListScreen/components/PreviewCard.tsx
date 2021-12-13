@@ -1,8 +1,9 @@
 import React from 'react';
-import { Typography, Container, Box, Card, CardMedia } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Typography, Container, Box, Card, CardMedia, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import useStyles from './styles/PreviewCardStyles';
+import useStyles from '../styles/PreviewCardStyles';
+
 import { pink } from '@mui/material/colors';
 
 interface CardProps {
@@ -17,6 +18,8 @@ interface CardProps {
 
 const PreviewCard: React.FC<CardProps> = (props) => {
     const classes = useStyles();
+    const navigate = useNavigate();
+    const goToArticleHandler = () => navigate(`/${props.id}`)
 
     return (
         <Card className={classes.root}>
@@ -35,9 +38,8 @@ const PreviewCard: React.FC<CardProps> = (props) => {
                 </Typography>
                 <Typography variant="body2" className={classes.text}>
                     {props.text}
-                    <Link to={`${props.id}`} >
-                        read all
-                    </Link>
+                    <Button onClick={goToArticleHandler} size="small">read all</Button>
+
                 </Typography>
             </Container>
             <Container className={classes.container} >

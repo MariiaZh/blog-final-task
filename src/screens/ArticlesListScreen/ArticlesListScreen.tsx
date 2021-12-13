@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import dummy_users from "../models/dummy_users";
-import dummy_posts from "../models/dummy_posts";
-import { Tabs, Tab, Box } from '@mui/material';
-import PreviewCard from '../components/PreviewCard';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Article from '../models/Article';
 
+import { Tabs, Tab, Box, MenuItem, FormControl } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import PreviewCard from './components/PreviewCard';
+
+import Article from '../../models/Article';
+import dummy_users from "../../models/dummy_users";
+import dummy_posts from "../../models/dummy_posts";
 // Later logic of genres will be work with reducers
 
 const lastAddedList: Article[] = [];
@@ -25,6 +25,7 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
+
     const { children, value, index, ...other } = props;
     return (
         <div
@@ -54,6 +55,7 @@ const genresArray: string[] = ['Action', "Mystery", 'Thriller', "Drama", 'Fantas
 ];
 
 const ArticlesScreen: React.FC = () => {
+
     const [value, setValue] = useState(0);
     const [isGenreTab, setIsGenreTab] = useState(false);
 
@@ -77,8 +79,6 @@ const ArticlesScreen: React.FC = () => {
         });
 
         setGenre(event.target.value);
-
-        console.log(' genreSortedList:', genreSortedList)
     };
 
     return (

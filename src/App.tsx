@@ -2,9 +2,9 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from './components/Layout';
 
-import ArticlesScreen from './screens/ArticlesScreen';
-import FullArticleScreen from "./screens/FullArticleScreen";
-import HomeScreen from './screens/HomeScreen';
+import ArticlesScreen from './screens/ArticlesListScreen/ArticlesListScreen';
+import FullArticleScreen from "./screens/FullArticleScreen/FullArticleScreen";
+import UserScreen from './screens/UserScreen/UserScreen';
 //import Authentication from './screens/Authentication';
 
 
@@ -15,7 +15,7 @@ function App() {
                 <Route path="/" element={<ArticlesScreen />} />
                 <Route path="articles" element={<ArticlesScreen />} />
                 <Route path=':id' element={<FullArticleScreen />} />
-                <Route path="home" element={<HomeScreen />} />
+                <Route path="home" element={<UserScreen />} />
             </Route>
         </Routes >
     );

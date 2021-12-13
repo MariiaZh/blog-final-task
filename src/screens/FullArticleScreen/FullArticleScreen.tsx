@@ -1,15 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
-import { Box, Typography } from '@mui/material';
+import FullArticleCard from "./components/FullArticleCard";
+import SideBar from '../../components/SideBar/SideBar';
 import useStyles from './styles/FullArticleScreenStyles';
 
-import FullArticle from "../components/FullArticle";
-import ShortCard from '../components/ShortCard';
-import dummy_posts from '../models/dummy_posts';
-import dummy_users from '../models/dummy_users';
-import Article from '../models/Article';
-import User from '../models/User';
+import dummy_posts from '../../models/dummy_posts';
+import dummy_users from '../../models/dummy_users';
+import Article from '../../models/Article';
+import User from '../../models/User';
 
 const FullArticleScreen: React.FC = () => {
     const classes = useStyles();
@@ -27,27 +27,17 @@ const FullArticleScreen: React.FC = () => {
     if (user) {
         return (
             <div className={classes.root}>
-                <FullArticle
+                <FullArticleCard
                     image={article.image}
                     title={article.title}
                     author={user.nickName}
                     text={article.text}
                     date={article.date}
                     likes={article.likes}
+                    comments={article.comments}
                 />
-
-                <div className={classes.sidebar}>
-                    <Typography variant="h5" component="p" color="text.primary" >Recommended Reading</Typography>
-                    {dummy_posts.map(post => {
-                        const shorttext = post.text.split('.');
-                        return < ShortCard
-                            key={post.id}
-                            id={post.id}
-                            title={post.title}
-                            text={shorttext[0].toString() + '...'} />
-                    })}
-                </div>
-            </div>
+                <SideBar />
+            </div >
         );
     } else {
         return <Typography>Something went wrong...</Typography>;

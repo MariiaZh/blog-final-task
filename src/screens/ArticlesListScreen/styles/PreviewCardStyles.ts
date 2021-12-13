@@ -16,6 +16,7 @@ const useStyles = makeStyles({
     text: {
         minHeight: 70
     },
+
     title: {
         textAlign: "center"
     },

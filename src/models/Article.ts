@@ -1,4 +1,4 @@
-type Comment = {
+export type Comment = {
     author: boolean,
     nickName: string,
     date: string,
