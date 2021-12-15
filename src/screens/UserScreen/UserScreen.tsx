@@ -1,22 +1,23 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from '../../store/index';
+
 import dummy_posts from "../../models/dummy_posts";
-import dummy_users from '../../models/dummy_users';
 import useStyles from "./styles/UserScreenStyles";
 
 import UserMenu from "./components/UserMenu";
 import UserArticleCard from "./components/UserArticleCard";
 import SideBar from "../../components/SideBar/SideBar";
 
-const currentUser = dummy_users[0];
-const usersPosts = dummy_posts.filter(post => post.authorId === currentUser.userId);
-
 const UserScreen: React.FC = () => {
     const classes = useStyles();
+    const currentUser = useSelector((state: RootState) => state.userAuth.user);
+    const usersPosts = dummy_posts.filter(post => post.authorId === currentUser.userId);
 
     return (
         <div className={classes.root} >
             <UserMenu />
-            <div style={{ width: "58%" }}>
+            <div className={classes.articlesList}>
                 {usersPosts.map(post => {
                     return (<UserArticleCard
                         key={post.id}
@@ -25,7 +26,6 @@ const UserScreen: React.FC = () => {
                         text={post.text}
                         likes={post.likes}
                         image={post.image}
-                        author={currentUser.nickName}
                         date={post.date}
                         comments={post.comments}
                     />)

@@ -6,6 +6,7 @@ import { pink } from '@mui/material/colors';
 import { Comment } from '../../../models/Article';
 import DeleteIcon from '@mui/icons-material/Delete';
 import constants from '../../../constants/constants';
+import stringAvatar from '../../../helpers/avatarUI';
 
 interface CardProps {
     image: string,
@@ -17,28 +18,6 @@ interface CardProps {
     comments: Comment[],
 }
 
-function stringToColor(string: string) {
-    let hash = 0;
-    let i;
-    for (i = 0; i < string.length; i += 1) {
-        hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = '#';
-    for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff;
-        color += `00${value.toString(16)}`.substr(-2);
-    }
-    return color;
-}
-
-function stringAvatar(name: string) {
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        },
-        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-}
 
 const FullArticleCard: React.FC<CardProps> = (props) => {
     const classes = useStyles();

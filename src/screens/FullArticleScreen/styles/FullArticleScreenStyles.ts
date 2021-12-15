@@ -6,6 +6,7 @@ const useStyles = makeStyles({
         justifyContent: 'space-around',
         width: "100%",
         padding: 0,
+       
 
     },
 

@@ -5,7 +5,7 @@ export type Comment = {
     text: string
 }
 
-class Article {
+export class Article {
     public id: string;
     public authorId: string;
     public title: string;
@@ -15,7 +15,6 @@ class Article {
     public comments: Comment[];
     public likes: number;
     public image: string;
-
 
     constructor(id: string, authorId: string, title: string, text: string, date: string, categories: string[], comments: Comment[], likes: number, image: string) {
         this.id = id;

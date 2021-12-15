@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import constants from '../../../constants/constants';
 
 const useStyles = makeStyles({
     root: {
@@ -6,31 +7,33 @@ const useStyles = makeStyles({
         flexDirection: "column",
         justifyContent: "space-between",
         margin: 15,
-        boxShadow: "5px 4px 4px gray, -3px 4px 4px gray",
+        boxShadow: constants.boxShadowGray,
         maxWidth: 450,
         minHeight: 450,
-    },
-    author: {
-        marginBottom: 15,
+        borderRadius: 6,
+        backgroundColor: 'white',
+
+        "& img": {
+            borderRadius: "6px 6px 0 0",
+            marginBottom: 10,
+        }
     },
     text: {
         minHeight: 70
     },
-
     title: {
         textAlign: "center"
     },
     box: {
-        display: "flex"
+        display: "flex",
     },
     container: {
         marginBottom: 15,
         display: 'flex',
         justifyContent: 'space-around'
     },
-
     likesValue: {
-        marginLeft: 10
+        marginRight: 10
     }
 });
 

@@ -22,7 +22,7 @@ const PreviewCard: React.FC<CardProps> = (props) => {
     const goToArticleHandler = () => navigate(`/${props.id}`)
 
     return (
-        <Card className={classes.root}>
+        <div className={classes.root}>
             <CardMedia
                 component="img"
                 height="250"
@@ -30,7 +30,7 @@ const PreviewCard: React.FC<CardProps> = (props) => {
                 alt={props.title}
             />
             <Container>
-                <Typography variant="body1" color="text.primary" className={classes.author}>
+                <Typography variant="body1" color="text.primary">
                     By {props.author}
                 </Typography>
                 <Typography gutterBottom variant="h5" component="div" className={classes.title}>
@@ -39,17 +39,16 @@ const PreviewCard: React.FC<CardProps> = (props) => {
                 <Typography variant="body2" className={classes.text}>
                     {props.text}
                     <Button onClick={goToArticleHandler} size="small">read all</Button>
-
                 </Typography>
             </Container>
-            <Container className={classes.container} >
-                <Box className={classes.box}>
-                    <FavoriteIcon sx={{ color: pink[500] }} />
-                    <Typography className={classes.likesValue}>{props.likes}</Typography>
-                </Box>
+            <div className={classes.container} >
+                <div className={classes.box}>
+                    <div className={classes.likesValue}> <FavoriteIcon sx={{ color: pink[500] }} /> </div>
+                    <Typography >{props.likes}</Typography>
+                </div>
                 <Typography>{props.date}</Typography>
-            </Container>
-        </Card>
+            </div>
+        </div>
 
     );
 }

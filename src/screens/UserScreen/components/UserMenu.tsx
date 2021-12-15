@@ -1,51 +1,61 @@
 import React from "react";
+import { CardMedia, Divider, MenuList, MenuItem, ListItemText, Typography } from '@mui/material';
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
-import dummy_users from '../../../models/dummy_users';
-import useStyles from "../styles/UserScreenStyles";
+import { RootState } from "../../../store";
+import { userAuthActions } from "../../../store/userAuth";
+import showAvatar from "../../../models/avatars_array";
 
-import { Avatar, Container } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import BadgeIcon from '@mui/icons-material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
+import useStyles from "../styles/UserMenuStyles";
 
 const UserMenu: React.FC = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const currentUser = useSelector((state: RootState) => state.userAuth.user);
+    const path = showAvatar(currentUser.picture);
+
+    const logOutHandler = () => {
+        dispatch(userAuthActions.logOutUser());
+        dispatch(userAuthActions.changePage(false));
+        navigate('/');
+    }
 
     return (
-
-        <Paper className={classes.menu}>
-            <Avatar className={classes.avatar} />
+        <div className={classes.menu}>
+            <CardMedia
+                component="img"
+                height="290"
+                image={path}
+            />
+            <div className={classes.menuItem}>
+                <div className={classes.menuIconWrapper}>
+                    <BadgeIcon className={classes.icon} />
+                </div>
+                <div >
+                    <Typography component="p">{currentUser.nickName}</Typography>
+                </div>
+            </div>
+            <div className={classes.menuItem}>
+                <div className={classes.menuIconWrapper}>
+                    <MailIcon className={classes.icon} />
+                </div>
+                <Typography component="p">{currentUser.email}</Typography>
+            </div>
             <MenuList>
-                <MenuItem>
-                    <ListItemIcon>
-                        <BadgeIcon />
-                    </ListItemIcon>
-                    <ListItemText inset>{dummy_users[0].nickName}</ListItemText>
-                </MenuItem>
-                <MenuItem>
-                    <ListItemIcon>
-                        <MailIcon />
-                    </ListItemIcon>
-                    <ListItemText inset>{dummy_users[0].email}</ListItemText>
-                </MenuItem>
                 <Divider />
-
-                <MenuItem>
+                <MenuItem className={classes.menuItem}>
                     <ListItemText>Add New Article</ListItemText>
                 </MenuItem>
-
                 <Divider />
                 <MenuItem>
-                    <ListItemText>Log Out</ListItemText>
+                    <ListItemText onClick={logOutHandler}>Log Out</ListItemText>
                 </MenuItem>
             </MenuList>
-        </Paper>
-
+        </div >
     )
 }
 

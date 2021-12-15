@@ -1,43 +1,51 @@
 import { makeStyles } from '@mui/styles';
+import constants from '../../../constants/constants';
+import { pink } from '@mui/material/colors';
 
 const useStyles = makeStyles({
     root: {
-
-        justifyContent: "space-between",
+        backgroundColor: 'white',
         margin: "0 0 30px 0",
-        //boxShadow: "5px 4px 4px gray, -3px 4px 4px gray",
-        minHeight: 450,
+        padding: "30px 0",
+        boxShadow: constants.boxShadowGray,
     },
     articleDate: {
-        margin: 15,
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '0 30px',
+        padding: 0,
     },
+    box: {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    likes: {
+        marginRight: 10,
+        "& svg": {
+            color: pink[500]
+        }
+    },
+
     contentWrapper: {
-        display: 'flex'
+        display: 'flex',
+        marginTop: 15,
     },
-    imageWrapper: {
-        backgroundColor: 'black',
-        width: '40%',
-        height: "auto",
-        borderRadius: '0 6px 6px 0',
-        overflow: 'hidden',
-        padding: 0
+
+    image: {
+        maxWidth: '40%',
+        borderRadius: 6,
+        margin: "0 15px",
     },
+
     textWrapper: {
-        width: "60%"
+        marginRight: 30,
     },
     title: {
+        color: pink[500],
         textAlign: "center"
     },
-
     text: {
         textAlign: 'justify',
-    },
-
-
-    box: {
-
-        display: "flex",
-        justifyContent: "flex-end"
     },
 
     container: {
@@ -46,25 +54,28 @@ const useStyles = makeStyles({
         justifyContent: 'space-around'
     },
 
-    likesValue: {
-        marginLeft: 10
-    },
-
     commentsContainer: {
-        borderBottom: "2px solid lightgray",
-        margin: 25,
+        borderTop: "2px solid lightgray",
+        margin: 15,
+        paddingTop: 15,
     },
-
     commentsTitle: {
-        textAlign: "left"
+        paddingLeft: 15,
+        textAlign: "left",
     },
 
     comments: {
         borderTop: "2px solid lightgray",
         margin: '15px 0',
         padding: "15px 0 0",
-
     },
+
+    commentAuthor: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingLeft: 55,
+    },
+
     commentText: {
         display: 'flex',
         alignItems: 'center',
@@ -74,14 +85,10 @@ const useStyles = makeStyles({
     },
 
     commentActives: {
-        marginTop: 15,
+        margin: "15px 0",
+        paddingLeft: 50,
         display: 'flex',
-        alignItems: 'end',
-
-    },
-    authorContainer: {
-        margin: 25,
-        textAlign: "center"
+        justifyContent: 'space-between'
     },
 
 });

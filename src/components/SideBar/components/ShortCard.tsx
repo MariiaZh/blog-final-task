@@ -16,6 +16,7 @@ const ShortCard: React.FC<CardProps> = (props) => {
 
     const goToArticleHandler = () => navigate(`/${props.id}`)
 
+ 
     return (
         <div className={classes.root}>
 

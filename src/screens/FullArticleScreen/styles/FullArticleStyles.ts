@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
 import { pink } from '@mui/material/colors';
+import constants from '../../../constants/constants';
 
 const useStyles = makeStyles({
     root: {
@@ -8,6 +9,8 @@ const useStyles = makeStyles({
         marginLeft: 40,
         borderRight: "2px solid lightgray",
         borderLeft: "2px solid lightgray",
+        backgroundColor: 'white',
+        boxShadow: constants.boxShadowGray
     },
     authorContainer: {
         margin: 25,

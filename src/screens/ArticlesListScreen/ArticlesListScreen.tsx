@@ -83,7 +83,7 @@ const ArticlesScreen: React.FC = () => {
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: "white" }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Last Added" {...a11yProps(0)} onClick={() => { setIsGenreTab(false); }} />
                     <Tab label="Top-Liked" {...a11yProps(1)} onClick={() => { setIsGenreTab(false); }} />
