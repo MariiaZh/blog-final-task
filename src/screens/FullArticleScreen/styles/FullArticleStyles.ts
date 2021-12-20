@@ -7,15 +7,20 @@ const useStyles = makeStyles({
         width: "75%",
         margin: "0 20px",
         marginLeft: 40,
-        borderRight: "2px solid lightgray",
-        borderLeft: "2px solid lightgray",
         backgroundColor: 'white',
         boxShadow: constants.boxShadowGray
     },
     authorContainer: {
-        margin: 25,
-        textAlign: "center"
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 15,
+
+        "& div": {
+            padding: 10,
+        }
     },
+
     author: {
         margin: 15,
         color: pink[500],
@@ -24,10 +29,12 @@ const useStyles = makeStyles({
         textAlign: "center",
         margin: 25
     },
-    text: {
+
+    textContainer: {
         margin: 25,
-        textAlign: "justify"
+        textAlign: "justify",
     },
+
     container: {
         borderTop: "2px solid lightgray",
         borderBottom: "2px solid lightgray",

@@ -1,25 +1,22 @@
 import React from 'react';
-import { Typography, Container, Box, Card, CardMedia, Button } from '@mui/material';
+import { Typography, Container, CardMedia, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useStyles from '../styles/PreviewCardStyles';
+import Article from '../../../models/Article';
 
 import { pink } from '@mui/material/colors';
 
-interface CardProps {
-    id: string,
-    image: string,
-    title: string,
-    author: string,
-    text: string,
-    date: string,
-    likes: number,
-}
-
-const PreviewCard: React.FC<CardProps> = (props) => {
+const PreviewCard: React.FC<{key: string} & Article> = (props) => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const goToArticleHandler = () => navigate(`/${props.id}`)
+    const authorsList = useSelector((state: RootState) => state.articlesWorker.usersList);
+
+    const author = authorsList.find(author => author.userId === props.authorIdKey);
+
+    const goToArticleHandler = () => navigate(`/${props.articleId}`);
 
     return (
         <div className={classes.root}>
@@ -31,7 +28,7 @@ const PreviewCard: React.FC<CardProps> = (props) => {
             />
             <Container>
                 <Typography variant="body1" color="text.primary">
-                    By {props.author}
+                    By {author ? author.nickName : ''}
                 </Typography>
                 <Typography gutterBottom variant="h5" component="div" className={classes.title}>
                     {props.title}

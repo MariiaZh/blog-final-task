@@ -13,6 +13,7 @@ const Header: React.FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    
     const userName: string = useSelector((state: RootState) => state.userAuth.user.nickName);
     const isLoginInSystem: boolean = useSelector((state: RootState) => state.userAuth.isLoginInSystem);
     const isItHomePage: boolean = useSelector((state: RootState) => state.userAuth.homePage);
@@ -38,7 +39,7 @@ const Header: React.FC = () => {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" >
             <Container maxWidth="xl">
                 <Toolbar disableGutters className={classes.toolbar}>
                     <div className={classes.logo}>

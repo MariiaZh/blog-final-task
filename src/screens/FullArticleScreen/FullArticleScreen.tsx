@@ -2,24 +2,32 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+
 import FullArticleCard from "./components/FullArticleCard";
 import SideBar from '../../components/SideBar/SideBar';
 import useStyles from './styles/FullArticleScreenStyles';
 
-import dummy_posts from '../../models/dummy_posts';
-import dummy_users from '../../models/dummy_users';
-import Article from '../../models/Article';
+import Article, { Comment } from '../../models/Article';
 import User from '../../models/User';
 
 const FullArticleScreen: React.FC = () => {
     const classes = useStyles();
+    const articlesList = useSelector((state: RootState) => state.articlesWorker.articlesList);
+    const users = useSelector((state: RootState) => state.articlesWorker.usersList);
+    const commentsList = useSelector((state: RootState) => state.articlesWorker.commentsList);
+
     const { id } = useParams();
 
-    const article: Article | void = dummy_posts.find(post => post.id === id);
+    const article: Article | void = articlesList.find(post => post.articleId === id);
+
+    let comments: Comment[];
     let user: User | void;
 
     if (article) {
-        user = dummy_users.find(user => user.userId === article.authorId);
+        user = users.find(user => user.userId === article.authorIdKey);
+        comments = commentsList.filter(comment => comment.articleIdKey === article.articleId)
     } else {
         return <Typography>Something went wrong...</Typography>;
     }
@@ -28,13 +36,9 @@ const FullArticleScreen: React.FC = () => {
         return (
             <div className={classes.root}>
                 <FullArticleCard
-                    image={article.image}
-                    title={article.title}
+                    {...article}
                     author={user.nickName}
-                    text={article.text}
-                    date={article.date}
-                    likes={article.likes}
-                    comments={article.comments}
+                    comments={comments}
                 />
                 <SideBar />
             </div >

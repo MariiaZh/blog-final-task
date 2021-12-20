@@ -11,13 +11,13 @@ const useStyles = makeStyles({
         borderRadius: 4,
         boxShadow: constatnts.boxShadowGray,
 
-        "& h1": {
+        "& h1, h3": {
             margin: 0,
             color: "white",
             textShadow: constatnts.textShadowIndigo,
         },
 
-        "& input[type=email], input[type=password]": {
+        "& input[type=email], input[type=password], input[type=text]": {
             display: "block",
             width: "94%",
             height: 25,
@@ -84,7 +84,21 @@ const useStyles = makeStyles({
             color: "white",
             borderBottom: `3px solid white`,
         },
-    }
+    },
+
+    pictureWrapper: {
+        marginTop: 15,
+        display: 'flex',
+        flexFlow: 'row wrap',
+        justifyContent: "space-evenly",
+        zIndex: 100,
+
+        "& .pictureBorder": {
+
+            //border: '4px solid white'
+        },
+    },
+
 });
 
 export default useStyles;

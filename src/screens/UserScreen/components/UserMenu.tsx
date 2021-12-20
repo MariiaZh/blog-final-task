@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { RootState } from "../../../store";
 import { userAuthActions } from "../../../store/userAuth";
+import { articlesWorkerActions } from '../../../store/articlesWorker';
 import showAvatar from "../../../models/avatars_array";
 
 import BadgeIcon from '@mui/icons-material/Badge';
@@ -15,6 +16,7 @@ const UserMenu: React.FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const currentUser = useSelector((state: RootState) => state.userAuth.user);
     const path = showAvatar(currentUser.picture);
 
@@ -22,6 +24,10 @@ const UserMenu: React.FC = () => {
         dispatch(userAuthActions.logOutUser());
         dispatch(userAuthActions.changePage(false));
         navigate('/');
+    }
+
+    const addNewArticleHandler = () => {
+        dispatch(articlesWorkerActions.addArticleOverlay());
     }
 
     return (
@@ -48,7 +54,7 @@ const UserMenu: React.FC = () => {
             <MenuList>
                 <Divider />
                 <MenuItem className={classes.menuItem}>
-                    <ListItemText>Add New Article</ListItemText>
+                    <ListItemText onClick={addNewArticleHandler}>Add New Article</ListItemText>
                 </MenuItem>
                 <Divider />
                 <MenuItem>

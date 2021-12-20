@@ -15,9 +15,11 @@ const useStyles = makeStyles({
         margin: '0 30px',
         padding: 0,
     },
-    box: {
+    boxActions: {
         display: "flex",
         justifyContent: "space-between",
+        alignItems: 'center',
+
     },
     likes: {
         marginRight: 10,
@@ -59,37 +61,32 @@ const useStyles = makeStyles({
         margin: 15,
         paddingTop: 15,
     },
+
+    commentsTitleContainer: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+
+
     commentsTitle: {
         paddingLeft: 15,
         textAlign: "left",
     },
 
-    comments: {
-        borderTop: "2px solid lightgray",
+    newComment: {
+
         margin: '15px 0',
         padding: "15px 0 0",
+
+        "& div": {
+            width: "100%"
+        },
+
+        "& button": {
+            marginTop: 15
+        }
     },
 
-    commentAuthor: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingLeft: 55,
-    },
-
-    commentText: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    avatar: {
-        marginRight: 15,
-    },
-
-    commentActives: {
-        margin: "15px 0",
-        paddingLeft: 50,
-        display: 'flex',
-        justifyContent: 'space-between'
-    },
 
 });
 

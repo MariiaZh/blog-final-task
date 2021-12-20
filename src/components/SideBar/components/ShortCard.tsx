@@ -4,22 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import useStyles from "../styles/ShortCardStyles";
 
 interface CardProps {
-    id: string,
+    key: string,
+    articleId: string,
     title: string,
     text: string,
 }
 
 const ShortCard: React.FC<CardProps> = (props) => {
-
     const classes = useStyles();
     const navigate = useNavigate();
+    const goToArticleHandler = () => navigate(`/${props.articleId}`)
 
-    const goToArticleHandler = () => navigate(`/${props.id}`)
-
- 
     return (
         <div className={classes.root}>
-
             <Typography variant="body1" component="p" className={classes.title}>
                 {props.title}
             </Typography>
@@ -28,8 +25,6 @@ const ShortCard: React.FC<CardProps> = (props) => {
                 <Button onClick={goToArticleHandler} size="small">
                     read all</Button>
             </Typography>
-
-
         </div>
     );
 }
