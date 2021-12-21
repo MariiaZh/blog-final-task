@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import { blue, indigo } from '@mui/material/colors';
+import { blue, indigo, pink } from '@mui/material/colors';
 import constatnts from '../../../constants/constants';
 
 const useStyles = makeStyles({
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
             display: "block",
             width: "94%",
             height: 25,
-            margin: "15px 0",
+            margin: "15px 0 5px 0",
             padding: 10,
             border: "none",
             borderRadius: 4,
@@ -93,10 +93,14 @@ const useStyles = makeStyles({
         justifyContent: "space-evenly",
         zIndex: 100,
 
-        "& .pictureBorder": {
+    },
 
-            //border: '4px solid white'
-        },
+    inputWrapper: {
+        margin: 10,
+
+        "& .hints": {
+            color: pink[800]
+        }
     },
 
 });

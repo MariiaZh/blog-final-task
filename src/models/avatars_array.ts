@@ -1,4 +1,4 @@
-export const avatars = [
+export const avatars: string[] = [
     '/assets/01-avatar.png',
     '/assets/02-avatar.png',
     '/assets/03-avatar.png',

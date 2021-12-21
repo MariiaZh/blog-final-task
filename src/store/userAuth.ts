@@ -24,23 +24,16 @@ const userAuth = createSlice({
     initialState,
     reducers: {
 
-        switchButton(state) {
-            state.isNewAccountCreating = !state.isNewAccountCreating;
+        switchButton(state, action) {
+            state.isNewAccountCreating = action.payload;
         },
 
         logInUser(state, action) {
-
             state.user = {
-                userId: action.payload.userId,
-                email: action.payload.email,
-                password: action.payload.password,
-                nickName: action.payload.nickName,
-                role: action.payload.role,
-                picture: action.payload.picture
+                ...action.payload
             }
             state.isLoginInSystem = true;
             state.isNewAccountCreating = false;
-
         },
 
         logOutUser(state) {
@@ -70,13 +63,14 @@ const userAuth = createSlice({
         builder.addCase(authenticationRequest.fulfilled, (state, action) => {
             state.status = 'resolved';
             state.error = '';
-            console.log('action.payload', action.payload);
             state.localId = action.payload;
         });
-        builder.addCase(authenticationRequest.rejected, (state, action) => { });
+
+        builder.addCase(authenticationRequest.rejected, (state) => {
+            state.status = 'rejected';
+            state.error = "error";
+        });
     },
-
-
 })
 
 export const userAuthActions = userAuth.actions;

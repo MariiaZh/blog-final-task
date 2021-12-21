@@ -18,6 +18,7 @@ const FullArticleScreen: React.FC = () => {
     const users = useSelector((state: RootState) => state.articlesWorker.usersList);
     const commentsList = useSelector((state: RootState) => state.articlesWorker.commentsList);
 
+    console.log(commentsList);
     const { id } = useParams();
 
     const article: Article | void = articlesList.find(post => post.articleId === id);

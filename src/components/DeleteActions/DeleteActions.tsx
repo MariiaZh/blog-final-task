@@ -1,30 +1,47 @@
-
+import React, { useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useDispatch } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+
 import { articlesWorkerActions } from '../../store/articlesWorker';
-import deleteRequest from '../../api/delete_request';
+import { deleteRequest } from '../../api/delete_request';
 
 const DeleteActions: React.FC<{ type: string, id: string }> = (props) => {
 
-
     const dispatch = useDispatch();
+    const deleteAnswer = useSelector((state: RootState) => state.deleteRequestWorker.deleteAnswer);
+
 
     const deleteCommentHandler = () => {
+
+
+
         switch (props.type) {
-            case "comments": dispatch(articlesWorkerActions.deleteComment(props.id));
-                deleteRequest({
-                    dataType: props.type,
-                    id: props.id
-                })
+            case "comments":
+                dispatch(deleteRequest({ dataType: props.type, id: props.id }));
                 break;
-            case 'article': dispatch(articlesWorkerActions.deleteArticle(props.id));
-                deleteRequest({
-                    dataType: props.type,
-                    id: props.id
-                })
+            case 'articles': dispatch(deleteRequest({ dataType: props.type, id: props.id }));
+                break;
+            case "users": dispatch(deleteRequest({ dataType: props.type, id: props.id }));
         }
     }
+
+    useEffect(() => {
+        switch (deleteAnswer) {
+            case "users":
+                dispatch(articlesWorkerActions.updateList('users'));
+
+                break;
+            case "articles":
+                dispatch(articlesWorkerActions.updateList('articles'));
+
+                break;
+            case "comments":
+                dispatch(articlesWorkerActions.updateList('comments'));
+        }
+    }, [deleteAnswer, dispatch])
 
     return (
         <IconButton onClick={deleteCommentHandler} >

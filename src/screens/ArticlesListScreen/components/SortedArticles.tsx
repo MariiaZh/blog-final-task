@@ -20,7 +20,6 @@ const SortedArticles: React.FC<{ sorterType: string }> = (props) => {
             for (let i = 6; i > 0; i--) {
                 finalList.push(arrForSort[arrForSort.length - i]);
             }
-            console.log(' finalList:', finalList)
             break;
         case 'most-liked': finalList = articlesList.slice().sort((a: Article, b: Article) => a.likes < b.likes ? 1 : -1);
             break;
@@ -41,7 +40,6 @@ const SortedArticles: React.FC<{ sorterType: string }> = (props) => {
                 if (typeof postAuthor === "undefined") {
                     postAuthor = "Incognita";
                 }
-
                 const postText: string = post.text.slice(0, 300);
                 return (
                     <PreviewCard

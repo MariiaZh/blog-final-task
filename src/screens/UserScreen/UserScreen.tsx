@@ -17,12 +17,10 @@ const UserScreen: React.FC = () => {
     const isNewArticle: boolean = useSelector((state: RootState) => state.articlesWorker.isArticleAdding);
     const allPosts = useSelector((state: RootState) => state.articlesWorker.articlesList);
     const commentsList = useSelector((state: RootState) => state.articlesWorker.commentsList);
-    const status = useSelector((state: RootState) => state.articlesWorker.statusPost);
 
     let userPosts: Article[] = [];
     let comments: Comment[] = [];
-
-    if (status !== 'loading') {
+    
         userPosts = allPosts.filter(post => post.authorIdKey === currentUser.userId);
         comments = commentsList.filter(comment => {
             const isCommentFound = userPosts.find(post => post.articleId === comment.articleIdKey);
@@ -32,7 +30,6 @@ const UserScreen: React.FC = () => {
                 return false;
             }
         });
-    }
 
     return (
         <Fragment>

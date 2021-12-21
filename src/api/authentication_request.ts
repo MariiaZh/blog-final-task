@@ -13,7 +13,6 @@ const authenticationRequest = createAsyncThunk(
 
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDe5LikvHnGOBiXi4GrVbuvGuIS8Aaxh2M'
 
-        console.log(' isAuth:REQUEST')
         if (props.newAcc) {
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDe5LikvHnGOBiXi4GrVbuvGuIS8Aaxh2M'
         }
@@ -32,12 +31,14 @@ const authenticationRequest = createAsyncThunk(
             })
 
             if (!response.ok) {
-                throw new Error("Something went wrong...");
+                throw new Error("Wrong credentials...");
             }
+
             const data = await response.json();
             return data.localId;
         } catch (err) {
             console.log(err);
+            return { error: err };
         }
     });
 

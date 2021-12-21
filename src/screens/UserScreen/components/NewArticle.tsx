@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import ReactDOM from "react-dom";
 
 import { Button, TextField, Typography, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
@@ -12,7 +12,7 @@ import { blue, pink } from '@mui/material/colors';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 import genres_array from '../../../models/genres_array';
-import postRequest from '../../../api/post_request';
+import { postRequest } from '../../../api/post_request';
 
 const Overlay = () => {
     const classes = useStyles();
@@ -25,36 +25,42 @@ const NewArticle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const currentUser = useSelector((state: RootState) => state.userAuth.user);
+    const postArticleAnswer = useSelector((state: RootState) => state.postRequestWorker.postArticleAnswer);
+    const [newPostId, setNewPostId] = useState('');
+
     const [checkedGenresArray, setCheckedGenresArray] = useState<string[]>([]);
+
     const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
     const textRef = useRef() as React.MutableRefObject<HTMLInputElement>;
     const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
-
     const saveArticleHandler = () => {
 
-        dispatch(articlesWorkerActions.addArticleOverlay());
-        const article = {
-            articleId: String(Date.now()),
-            authorIdKey: currentUser.userId,
-            image: imageRef.current.value,
-            title: titleRef.current.value,
-            text: textRef.current.value,
-            date: new Date().toDateString(),
-            categories: checkedGenresArray,
-            likes: 0,
-        }
-
-        dispatch(articlesWorkerActions.addArticle({ ...article }));
-
-        postRequest(
-            {
+        if (imageRef.current.value.length > 0 && textRef.current.value.length > 0 && imageRef.current.value.length > 0) {
+            dispatch(articlesWorkerActions.addArticleOverlay());
+            dispatch(postRequest({
                 dataType: 'articles',
-                ...article
-            }
-        )
-
+                articleId: String(Date.now()),
+                authorIdKey: currentUser.userId,
+                image: imageRef.current.value,
+                title: titleRef.current.value,
+                text: textRef.current.value,
+                date: new Date().toDateString(),
+                categories: checkedGenresArray,
+                likes: 0,
+            }));
+            setCheckedGenresArray([]);
+        } else {
+            alert("Please, input all text fields...")
+        }
     }
+
+    useEffect(() => {
+        if (postArticleAnswer !== newPostId) {
+            dispatch(articlesWorkerActions.updateList('articles'));
+            setNewPostId(postArticleAnswer);
+        }
+    }, [postArticleAnswer, dispatch, newPostId])
 
     const [isAlert, setIsAlert] = useState(false);
 
@@ -92,11 +98,8 @@ const NewArticle = () => {
                 return genres.filter(genre => genre !== event.target.id);
             })
         } else {
-            console.log('event.targetID', event.target.id);
-
             setCheckedGenresArray([...checkedGenresArray, event.target.id]);
         }
-        console.log(checkedGenresArray);
     }
 
     return (

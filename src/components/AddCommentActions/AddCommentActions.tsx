@@ -1,21 +1,27 @@
-import React, { Fragment, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { articlesWorkerActions } from '../../store/articlesWorker';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { Typography, Button, IconButton, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { articlesWorkerActions } from '../../store/articlesWorker';
 import { RootState } from '../../store/index';
-import postRequest from '../../api/post_request';
+import { postRequest } from '../../api/post_request';
+import { fetchData } from '../../api/fetch_request';
 
 import useStyles from './styles/AddCommentActionsStyles';
 import { pink, blue } from '@mui/material/colors';
+import { patchRequest } from '../../api/patchRequest';
 
 const AddCommentActions: React.FC<{ articleId: string }> = (props) => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.userAuth.user.nickName);
+    const postCommentAnswer = useSelector((state: RootState) => state.postRequestWorker.postCommentAnswer);
+    const patchCommentAnswer = useSelector((state: RootState) => state.postRequestWorker.patchCommentAnswer);
+
     const [isAddNewComment, setIsAddNewComment] = useState(false);
+    const [newPostId, setNewPostId] = useState('');
 
     const textRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -28,26 +34,36 @@ const AddCommentActions: React.FC<{ articleId: string }> = (props) => {
 
         if (textRef.current.value !== '') {
 
-            const comment = {
+            dispatch(postRequest({
+                dataType: 'comments',
                 articleIdKey: props.articleId,
-                commentId: props.articleId + Math.floor(Math.random() * 10000),
+                commentId: String(Math.round(Math.random() * 10000)),
                 nickName: user,
                 date: new Date().toDateString(),
                 text: textRef.current.value,
-            }
-
-            dispatch(articlesWorkerActions.addComment({ ...comment }))
-
-            postRequest({
-                dataType: 'comment',
-                ...comment
-            })
-
+            }))
             textRef.current.value = '';
             setIsAddNewComment(!isAddNewComment);
-            dispatch(articlesWorkerActions.updateList('comments'));
         }
     }
+
+    useEffect(() => {
+        if (postCommentAnswer !== newPostId) {
+            dispatch(patchRequest({
+                dataType: "comments",
+                id: postCommentAnswer,
+                keyData: 'commentId'
+            }));
+            setNewPostId(postCommentAnswer);
+        }
+    }, [postCommentAnswer, dispatch, newPostId])
+
+    useEffect(() => {
+        if (patchCommentAnswer) {
+            dispatch(fetchData("comments"));
+            dispatch(articlesWorkerActions.updateList('comments'));
+        }
+    }, [patchCommentAnswer, dispatch])
 
     const eraseCommentHandler = () => {
         setIsAddNewComment(!isAddNewComment);
