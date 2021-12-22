@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { CardMedia, ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
 
 import { useDispatch, useSelector } from "react-redux";
@@ -19,8 +19,9 @@ const SignUpForm = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const users = useSelector((state: RootState) => state.articlesWorker.usersList);
-    const localId = useSelector((state: RootState) => state.userAuth.localId);
+    const { localId, access } = useSelector((state: RootState) => state.userAuth);
 
+    const [isNewUserId, setIsNewUserId] = useState('nobody');
     const [alignment, setAlignment] = useState("1");
 
     const formik = useFormik({
@@ -41,13 +42,14 @@ const SignUpForm = () => {
             if (isSuccessMsg.status !== 'success') {
                 alert(isSuccessMsg.message);
             } else {
+                alert(isSuccessMsg.message);
+                dispatch(userAuthActions.getAccess(true));
                 dispatch(authenticationRequest({
                     email: values.email,
                     password: values.password,
                     newAcc: true
                 })
                 )
-                alert(JSON.stringify(values, null, 2));
             }
         }
     })
@@ -62,7 +64,7 @@ const SignUpForm = () => {
     };
 
     useEffect(() => {
-        if (localId !== '') {
+        if (access && localId !== isNewUserId && localId !== '') {
             const user = {
                 userId: localId,
                 nickName: formik.values.nickName,
@@ -71,17 +73,19 @@ const SignUpForm = () => {
                 password: formik.values.password,
                 role: "user",
             }
-            postRequest({
+            console.log('!!!FROM USEEFFECT SIGN USER:');
+            dispatch(postRequest({
                 dataType: "users",
-                ...user
-            })
+                data: { ...user }
+            }));
             dispatch(userAuthActions.logInUser({ ...user }));
+            setIsNewUserId(localId);
         }
-    }, [localId, dispatch, formik.values.nickName, control.value, formik.values.email, formik.values.password,])
+    }, [access, localId, isNewUserId, dispatch, formik.values.nickName, control.value, formik.values.email, formik.values.password,])
 
-    const changeButtonHandler = (e: React.MouseEvent) => {
+    const changeButtonHandler = useCallback((e: React.MouseEvent) => {
         dispatch(userAuthActions.switchButton(false));
-    }
+    }, [dispatch])
 
     return (<form className={classes.root}
         onSubmit={formik.handleSubmit} >
@@ -141,7 +145,6 @@ const SignUpForm = () => {
             <input type="submit"
                 value="CREATE ACCOUNT" />
         </div>
-
         <div className="wrapper">
             <input type="button"
                 value="LOG IN"

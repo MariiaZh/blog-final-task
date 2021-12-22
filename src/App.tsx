@@ -18,7 +18,7 @@ function App() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const isLogIn: boolean = useSelector((state: RootState) => state.userAuth.isLoginInSystem);
+    const isLoginInSystem = useSelector((state: RootState) => state.userAuth.isLoginInSystem);
     const isUsersUpdate = useSelector((state: RootState) => state.articlesWorker.isUsersUpdate)
     const isArticlesUpdate = useSelector((state: RootState) => state.articlesWorker.isArticlesUpdate)
     const isCommentsUpdate = useSelector((state: RootState) => state.articlesWorker.isCommentsUpdate)
@@ -32,33 +32,32 @@ function App() {
         }
         if (isCommentsUpdate) {
             dispatch(fetchData("comments"));
-            
         }
     }, [dispatch, isUsersUpdate, isArticlesUpdate, isCommentsUpdate]);
 
     useEffect(() => {
-        if (!isLogIn && location.pathname !== '/') {
+        if (!isLoginInSystem && location.pathname !== '/') {
             navigate('/')
         }
-    }, [isLogIn, location.pathname, navigate]);
-
+    }, [isLoginInSystem, location.pathname, navigate]);
 
     return (<Fragment>
         {
-            (isUsersUpdate && isCommentsUpdate && isArticlesUpdate) ?
+            (isUsersUpdate && isArticlesUpdate && isCommentsUpdate) ?
                 <Container>Please, wait... getting data from the server...</Container>
-                : (<Routes>
+                :
+                (<Routes>
                     <Route path="/" element={<Layout />}>
-                        {!isLogIn ? (
+                        {!isLoginInSystem ? (
                             <Fragment>
-                                <Route path={location.pathname} element={<AuthenticationScreen />} />
+                                <Route path={"/"} element={<AuthenticationScreen />} />
 
                             </Fragment>
                         ) : (
                             <Fragment>
                                 <Route path="/" element={<ArticlesScreen />} />
                                 <Route path="articles" element={<ArticlesScreen />} />
-                                <Route path=':id' element={<FullArticleScreen />} />
+                                <Route path=':articleId' element={<FullArticleScreen />} />
                                 <Route path="home" element={<UserScreen />} />
                             </Fragment>
                         )}

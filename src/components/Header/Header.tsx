@@ -13,10 +13,9 @@ const Header: React.FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
     const userName: string = useSelector((state: RootState) => state.userAuth.user.nickName);
-    const isLoginInSystem: boolean = useSelector((state: RootState) => state.userAuth.isLoginInSystem);
-    const isItHomePage: boolean = useSelector((state: RootState) => state.userAuth.homePage);
+    const { isLoginInSystem, homePage } = useSelector((state: RootState) => state.userAuth);
 
     const changeScreenHandler = (page: string) => {
         switch (page) {
@@ -29,6 +28,7 @@ const Header: React.FC = () => {
             default:
                 dispatch(userAuthActions.changePage(false));
         }
+        dispatch(userAuthActions.getAccess(false));
         navigate(`/${page.toLowerCase()}`);
     }
 
@@ -48,10 +48,10 @@ const Header: React.FC = () => {
                     {isLoginInSystem &&
                         <div className={classes.buttons}>
                             <Button onClick={() => { changeScreenHandler('articles') }} >
-                                <span className={!isItHomePage ? classes.underline : ''}>Articles</span>
+                                <span className={!homePage ? classes.underline : ''}>Articles</span>
                             </Button>
                             <Button onClick={() => { changeScreenHandler('home') }} >
-                                <span className={isItHomePage ? classes.underline : ''}>Home</span>
+                                <span className={homePage ? classes.underline : ''}>Home</span>
                             </Button>
                         </div>
                     }

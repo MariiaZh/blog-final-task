@@ -31,7 +31,7 @@ const articlesWorker = createSlice({
         },
 
         chooseCurrentPost(state, action) {
-            state.currentPost = action.payload;
+            state.currentPost = action.payload
         },
 
         changeSelectedGenre(state, action) {
@@ -39,6 +39,7 @@ const articlesWorker = createSlice({
         },
 
         updateList(state, action) {
+            console.log('update-store')
             switch (action.payload) {
                 case "users":
                     state.isUsersUpdate = true;
@@ -48,6 +49,7 @@ const articlesWorker = createSlice({
                     break;
                 case "comments":
                     state.isCommentsUpdate = true;
+                    break;
             }
         }
     },
@@ -71,14 +73,17 @@ const articlesWorker = createSlice({
                     case "users":
                         state.usersList = dataArray;
                         state.isUsersUpdate = false;
+
                         break;
                     case "articles":
                         state.articlesList = dataArray;
                         state.isArticlesUpdate = false;
+
                         break;
                     case "comments":
                         state.commentsList = dataArray;
                         state.isCommentsUpdate = false;
+                        break;
                 }
             }
         });

@@ -18,10 +18,9 @@ const FullArticleScreen: React.FC = () => {
     const users = useSelector((state: RootState) => state.articlesWorker.usersList);
     const commentsList = useSelector((state: RootState) => state.articlesWorker.commentsList);
 
-    console.log(commentsList);
-    const { id } = useParams();
+    const { articleId } = useParams();
 
-    const article: Article | void = articlesList.find(post => post.articleId === id);
+    const article: Article | void = articlesList.find(post => post.articleId === articleId);
 
     let comments: Comment[];
     let user: User | void;

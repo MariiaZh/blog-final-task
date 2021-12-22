@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react';
+import React, { Fragment, useState, useRef, useEffect, useCallback } from 'react';
 import { Typography, Button, IconButton, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -22,30 +22,32 @@ const AddCommentActions: React.FC<{ articleId: string }> = (props) => {
 
     const [isAddNewComment, setIsAddNewComment] = useState(false);
     const [newPostId, setNewPostId] = useState('');
+    const [accessToPatch, setAccessToPatch] = useState(false);
 
     const textRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
-    const openNewCommentHandler = () => {
+    const openNewCommentHandler = useCallback(() => {
         setIsAddNewComment(!isAddNewComment);
         dispatch(articlesWorkerActions.chooseCurrentPost(props.articleId));
-    }
+    }, [isAddNewComment, dispatch, props.articleId]);
 
-    const addCommentHandler = () => {
+    const addCommentHandler = useCallback(() => {
 
         if (textRef.current.value !== '') {
-
             dispatch(postRequest({
                 dataType: 'comments',
-                articleIdKey: props.articleId,
-                commentId: String(Math.round(Math.random() * 10000)),
-                nickName: user,
-                date: new Date().toDateString(),
-                text: textRef.current.value,
+                data: {
+                    articleIdKey: props.articleId,
+                    commentId: String(Math.round(Math.random() * 10000)),
+                    nickName: user,
+                    date: new Date().toDateString(),
+                    text: textRef.current.value,
+                }
             }))
             textRef.current.value = '';
             setIsAddNewComment(!isAddNewComment);
         }
-    }
+    }, [dispatch, isAddNewComment, props.articleId, user])
 
     useEffect(() => {
         if (postCommentAnswer !== newPostId) {
@@ -55,20 +57,22 @@ const AddCommentActions: React.FC<{ articleId: string }> = (props) => {
                 keyData: 'commentId'
             }));
             setNewPostId(postCommentAnswer);
+            setAccessToPatch(true);
         }
     }, [postCommentAnswer, dispatch, newPostId])
 
     useEffect(() => {
-        if (patchCommentAnswer) {
+        if (patchCommentAnswer && accessToPatch) {
             dispatch(fetchData("comments"));
             dispatch(articlesWorkerActions.updateList('comments'));
+            setAccessToPatch(false);
         }
-    }, [patchCommentAnswer, dispatch])
+    }, [patchCommentAnswer, dispatch, accessToPatch])
 
-    const eraseCommentHandler = () => {
+    const eraseCommentHandler = useCallback(() => {
         setIsAddNewComment(!isAddNewComment);
         textRef.current.value = '';
-    }
+    }, [isAddNewComment])
 
     return (
         <Fragment>

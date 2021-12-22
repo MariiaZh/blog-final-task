@@ -4,7 +4,10 @@ import { deleteRequest } from '../api/delete_request';
 const initialState = {
     status: '',
     error: '',
-    deleteAnswer: '',
+    deleteAnswer: {
+        id: '',
+        dataType: '',
+    },
 }
 
 const deleteRequestWorker = createSlice({
@@ -22,18 +25,11 @@ const deleteRequestWorker = createSlice({
         builder.addCase(deleteRequest.fulfilled, (state, action) => {
             state.status = 'resolved';
             state.error = '';
-
-            console.log("deleteRequest.fulfilled", action.payload);
-
-            switch (action.payload?.dataType) {
-                case "users":
-                    state.deleteAnswer = "users";
-                    break;
-                case "articles":
-                    state.deleteAnswer = "articles";
-                    break;
-                case "comments":
-                    state.deleteAnswer = "comments";
+            if (action.payload?.id) {
+                state.deleteAnswer = {
+                    dataType: action.payload?.dataType,
+                    id: action.payload?.id,
+                };
             }
         });
     },

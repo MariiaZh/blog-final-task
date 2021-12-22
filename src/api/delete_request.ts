@@ -5,11 +5,14 @@ type Item = {
     id: string
 }
 
-
 export const deleteRequest = createAsyncThunk(
     "deleteRequestWorker/deleteRequest",
     async (props: Item) => {
-        const url = `https://critic-s-gaze-default-rtdb.europe-west1.firebasedatabase.app/${props.dataType}/${props.id}.json`;
+        let url = `https://critic-s-gaze-default-rtdb.europe-west1.firebasedatabase.app/${props.dataType}/${props.id}.json`;
+        if (props.dataType === 'articles') {
+            url = `https://critic-s-gaze-default-rtdb.europe-west1.firebasedatabase.app/${props.dataType}/-${props.id}.json`;
+        }
+
         try {
             const response = await fetch(url, {
                 method: 'DELETE',
@@ -20,10 +23,9 @@ export const deleteRequest = createAsyncThunk(
             const data = await response.json();
             console.log("DELETED", data)
             return {
-                statusData: data,
-                dataType: props.dataType
+                dataType: props.dataType,
+                id: props.id
             }
-
         } catch (err) {
             console.log(err);
         }

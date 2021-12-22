@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Typography } from '@mui/material';
 
 import { useDispatch, useSelector } from "react-redux";
@@ -27,12 +27,12 @@ const SignInForm = () => {
         validationSchema: ShortValidationSchema,
 
         onSubmit: (values) => {
+            console.log(" IN FORMIK")
             const isSuccessMsg = CompareExistingUsersWithInputFields({
                 arrayOfUsers: users,
                 email: values.email,
                 password: values.password,
             })
-
             if (isSuccessMsg.status !== 'success') {
                 alert(isSuccessMsg.message);
             } else {
@@ -46,11 +46,9 @@ const SignInForm = () => {
             }
         },
     })
-    
-    const changeButtonHandler = (e: React.MouseEvent) => {
+    const changeButtonHandler = useCallback((e: React.MouseEvent) => {
         dispatch(userAuthActions.switchButton(true));
-    }
-
+    }, [dispatch])
     return (
         <form className={classes.root}
             onSubmit={formik.handleSubmit} >
@@ -80,10 +78,8 @@ const SignInForm = () => {
             </div>
 
             <div className="wrapper">
-
                 <input type="submit" value="LOG IN" />
             </div>
-
             <div className="wrapper">
                 <input type="button"
                     value="CREATE ACCOUNT"

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -12,39 +12,21 @@ const DeleteActions: React.FC<{ type: string, id: string }> = (props) => {
 
     const dispatch = useDispatch();
     const deleteAnswer = useSelector((state: RootState) => state.deleteRequestWorker.deleteAnswer);
+    const [deletedId, setDeletedId] = useState('');
 
-
-    const deleteCommentHandler = () => {
-
-
-
-        switch (props.type) {
-            case "comments":
-                dispatch(deleteRequest({ dataType: props.type, id: props.id }));
-                break;
-            case 'articles': dispatch(deleteRequest({ dataType: props.type, id: props.id }));
-                break;
-            case "users": dispatch(deleteRequest({ dataType: props.type, id: props.id }));
-        }
+    const deleteHandler = () => {
+        dispatch(deleteRequest({ dataType: props.type, id: props.id }));
     }
 
     useEffect(() => {
-        switch (deleteAnswer) {
-            case "users":
-                dispatch(articlesWorkerActions.updateList('users'));
-
-                break;
-            case "articles":
-                dispatch(articlesWorkerActions.updateList('articles'));
-
-                break;
-            case "comments":
-                dispatch(articlesWorkerActions.updateList('comments'));
+        if (deleteAnswer.id !== deletedId && deleteAnswer.dataType !== 'articles') {
+            dispatch(articlesWorkerActions.updateList(deleteAnswer.dataType));
+            setDeletedId(deleteAnswer.id);
         }
-    }, [deleteAnswer, dispatch])
+    }, [deleteAnswer, dispatch, deletedId]);
 
     return (
-        <IconButton onClick={deleteCommentHandler} >
+        <IconButton onClick={deleteHandler} >
             <DeleteIcon color='disabled' />
         </IconButton>
     )

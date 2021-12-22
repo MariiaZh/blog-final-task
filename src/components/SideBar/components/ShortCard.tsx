@@ -13,7 +13,10 @@ interface CardProps {
 const ShortCard: React.FC<CardProps> = (props) => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const goToArticleHandler = () => navigate(`/${props.articleId}`)
+
+    const goToArticleHandler = () => {
+        navigate(`/${props.articleId}`);
+    }
 
     return (
         <div className={classes.root}>

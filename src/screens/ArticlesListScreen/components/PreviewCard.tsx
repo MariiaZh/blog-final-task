@@ -9,7 +9,7 @@ import Article from '../../../models/Article';
 
 import { pink } from '@mui/material/colors';
 
-const PreviewCard: React.FC<{key: string} & Article> = (props) => {
+const PreviewCard: React.FC<{ nickName: string } & Article> = (props) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const authorsList = useSelector((state: RootState) => state.articlesWorker.usersList);

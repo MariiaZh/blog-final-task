@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react';
+import React, { Fragment, useState, useRef } from 'react';
 import ReactDOM from "react-dom";
 
 import { Button, TextField, Typography, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
@@ -14,6 +14,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import genres_array from '../../../models/genres_array';
 import { postRequest } from '../../../api/post_request';
 
+
 const Overlay = () => {
     const classes = useStyles();
     return (
@@ -25,9 +26,6 @@ const NewArticle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const currentUser = useSelector((state: RootState) => state.userAuth.user);
-    const postArticleAnswer = useSelector((state: RootState) => state.postRequestWorker.postArticleAnswer);
-    const [newPostId, setNewPostId] = useState('');
-
     const [checkedGenresArray, setCheckedGenresArray] = useState<string[]>([]);
 
     const titleRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -40,14 +38,16 @@ const NewArticle = () => {
             dispatch(articlesWorkerActions.addArticleOverlay());
             dispatch(postRequest({
                 dataType: 'articles',
-                articleId: String(Date.now()),
-                authorIdKey: currentUser.userId,
-                image: imageRef.current.value,
-                title: titleRef.current.value,
-                text: textRef.current.value,
-                date: new Date().toDateString(),
-                categories: checkedGenresArray,
-                likes: 0,
+                data: {
+                    articleId: String(Date.now()),
+                    authorIdKey: currentUser.userId,
+                    image: imageRef.current.value,
+                    title: titleRef.current.value,
+                    text: textRef.current.value,
+                    date: new Date().toDateString(),
+                    categories: checkedGenresArray,
+                    likes: 0,
+                }
             }));
             setCheckedGenresArray([]);
         } else {
@@ -55,18 +55,12 @@ const NewArticle = () => {
         }
     }
 
-    useEffect(() => {
-        if (postArticleAnswer !== newPostId) {
-            dispatch(articlesWorkerActions.updateList('articles'));
-            setNewPostId(postArticleAnswer);
-        }
-    }, [postArticleAnswer, dispatch, newPostId])
-
     const [isAlert, setIsAlert] = useState(false);
 
     const resetArticleHandler = () => {
         setIsAlert(true);
     }
+
     const AlertMessage = (
         <div className={classes.alert}>
             <div className={classes.warning}>

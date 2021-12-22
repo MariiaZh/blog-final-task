@@ -10,9 +10,9 @@ const initialState = {
     postArticleAnswer: '',
     postCommentAnswer: '',
 
-    patchUserAnswer: true,
-    patchArticleAnswer: true,
-    patchCommentAnswer: true,
+    patchUserAnswer: '',
+    patchArticleAnswer: '',
+    patchCommentAnswer: '',
 }
 
 const postRequestWorker = createSlice({
@@ -35,15 +35,12 @@ const postRequestWorker = createSlice({
                 switch (action.payload.dataType) {
                     case "users":
                         state.postUserAnswer = action.payload.id;
-                        state.patchUserAnswer = false;
                         break;
                     case "articles":
-                        state.postArticleAnswer = action.payload.id;
-                        state.patchArticleAnswer = false;
+                        state.postArticleAnswer = action.payload.id.slice(1);
                         break;
                     case "comments":
                         state.postCommentAnswer = action.payload.id;
-                        state.patchCommentAnswer = false;
                 }
             }
         });
@@ -58,18 +55,15 @@ const postRequestWorker = createSlice({
 
             switch (action.payload?.dataType) {
                 case "users":
-                    state.patchUserAnswer = true;
-
+                    state.patchUserAnswer = action.payload.id;
                     break;
                 case "articles":
-                    state.patchArticleAnswer = true;
-
+                    state.patchArticleAnswer = action.payload.id;
                     break;
                 case "comments":
-                    state.patchCommentAnswer = true;
-
+                    state.patchCommentAnswer = action.payload.id;
                     break;
-                default: state.patchCommentAnswer = false;
+                default: alert('Wrong actions in patchrequest!');
             }
         });
     },

@@ -1,4 +1,3 @@
-
 import User from "../models/User";
 
 type DataType = {
@@ -30,6 +29,7 @@ export const CompareExistingUsersWithInputFields = (props: DataType) => {
             }
         }
     }
+
 }
 
 export const CompareNewUserWithExisting = (props: DataType) => {
@@ -47,7 +47,7 @@ export const CompareNewUserWithExisting = (props: DataType) => {
     } else {
         return {
             status: "success",
-            message: "Your account verificated!"
+            message: "Your account is approved!"
         }
     }
 }

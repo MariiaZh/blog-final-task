@@ -13,6 +13,20 @@ export function stringToColor(string: string) {
 }
 
 export default function stringAvatar(name: string) {
+
+    const lettersArr = name.split(' ');
+
+    let firstLetter = lettersArr[0][0];
+    let secondLetter = '';
+
+    if (lettersArr.length > 1) {
+        secondLetter = lettersArr[1][0];
+    }
+
+
+
+
+
     if (name === '') {
         return {
             sx: {
@@ -20,10 +34,13 @@ export default function stringAvatar(name: string) {
             },
         }
     }
+
+
+
     return {
         sx: {
             bgcolor: stringToColor(name),
         },
-        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        children: `${firstLetter}${secondLetter}`,
     };
 }

@@ -14,8 +14,10 @@ const authenticationRequest = createAsyncThunk(
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDe5LikvHnGOBiXi4GrVbuvGuIS8Aaxh2M'
 
         if (props.newAcc) {
+            console.log("sign up from auth-api!!!")
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDe5LikvHnGOBiXi4GrVbuvGuIS8Aaxh2M'
         }
+
 
         try {
             const response = await fetch(url, {
@@ -35,6 +37,7 @@ const authenticationRequest = createAsyncThunk(
             }
 
             const data = await response.json();
+            console.log("succses answer from firebase", data);
             return data.localId;
         } catch (err) {
             console.log(err);

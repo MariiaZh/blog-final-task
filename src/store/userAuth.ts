@@ -4,6 +4,7 @@ import authenticationRequest from '../api/authentication_request';
 const initialState = {
     isLoginInSystem: false,
     isNewAccountCreating: false,
+    access: false,
     user: {
         userId: '',
         email: '',
@@ -23,6 +24,10 @@ const userAuth = createSlice({
     name: "userAuth",
     initialState,
     reducers: {
+
+        getAccess(state, action) {
+            state.access = action.payload;
+        },
 
         switchButton(state, action) {
             state.isNewAccountCreating = action.payload;

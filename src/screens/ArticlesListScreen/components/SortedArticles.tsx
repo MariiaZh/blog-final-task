@@ -17,7 +17,7 @@ const SortedArticles: React.FC<{ sorterType: string }> = (props) => {
         case 'last-added':
             const arrForSort = [...articlesList];
             arrForSort.sort((a, b) => (a.date > b.date) ? 1 : -1);
-            for (let i = 6; i > 0; i--) {
+            for (let i = 3; i > 0; i--) {
                 finalList.push(arrForSort[arrForSort.length - i]);
             }
             break;
@@ -40,10 +40,14 @@ const SortedArticles: React.FC<{ sorterType: string }> = (props) => {
                 if (typeof postAuthor === "undefined") {
                     postAuthor = "Incognita";
                 }
-                const postText: string = post.text.slice(0, 300);
+                let postText = '';
+                if (post.text.length > 300) {
+                    postText = post.text.slice(0, 300);
+                }
                 return (
                     <PreviewCard
                         key={post.articleId + Math.round(Math.random() * 100)}
+                        nickName={postAuthor}
                         {...post}
                         text={postText}
                     />

@@ -2,9 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Article, { Comment } from "../models/Article";
 import User from '../models/User';
 
-type PropsArticle = { dataType: string } & Article;
-type PropsUser = { dataType: string } & User;
-type PropsComment = { dataType: string } & Comment;
+type PropsArticle = { dataType: string, data: Article };
+type PropsUser = { dataType: string, data: User };
+type PropsComment = { dataType: string, data: Comment };
 
 export const postRequest = createAsyncThunk(
     'postRequestWorker/postRequest',
@@ -16,14 +16,13 @@ export const postRequest = createAsyncThunk(
             const response = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify({
-                    ...props
+                    ...props.data
                 }),
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
             const data = await response.json();
-            console.log('DATA', data);
 
             return {
                 dataType: props.dataType,

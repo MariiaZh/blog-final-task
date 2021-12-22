@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Typography, CardMedia, Button, } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store';
 import AddCommentActions from '../../../components/AddCommentActions/AddCommentActions';
+import { articlesWorkerActions } from '../../../store/articlesWorker';
+import { deleteRequest } from '../../../api/delete_request';
 
 import DeleteActions from '../../../components/DeleteActions/DeleteActions';
 import CommentCard from '../../../components/CommentCard/CommentCard';
 import { Comment } from '../../../models/Article';
-
-
 import useStyles from '../styles/UserArticleCardStyles';
-
 
 type CardProps = {
     articleId: string,
@@ -31,11 +30,24 @@ type CardProps = {
 const UserArticleCard: React.FC<CardProps> = (props) => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const commentsList = useSelector((state: RootState) => state.articlesWorker.commentsList);
+    const dispatch = useDispatch();
 
+    const commentsList = useSelector((state: RootState) => state.articlesWorker.commentsList);
     const currentArticleComments = commentsList.filter(comment => comment.articleIdKey === props.articleId);
     const goToArticleHandler = () => navigate(`/${props.articleId}`);
     const userText: string = props.text.slice(0, 300);
+    const deleteAnswer = useSelector((state: RootState) => state.deleteRequestWorker.deleteAnswer);
+    const [deletedId, setDeletedId] = useState('');
+
+    useEffect(() => {
+        if (deleteAnswer.id !== deletedId && deleteAnswer.dataType === 'articles') {
+            dispatch(articlesWorkerActions.updateList(deleteAnswer.dataType));
+            setDeletedId(deleteAnswer.id);
+            currentArticleComments.forEach(comment => {
+                dispatch(deleteRequest({ dataType: "comments", id: comment.commentId }));
+            })
+        }
+    }, [deleteAnswer, dispatch, deletedId, currentArticleComments])
 
     return (
         <div className={classes.root}>
@@ -46,7 +58,7 @@ const UserArticleCard: React.FC<CardProps> = (props) => {
                     </div>
                     <Typography style={{ fontWeight: 'bold', marginRight: 25 }}>{props.likes}</Typography>
                     <DeleteActions
-                        type="article"
+                        type="articles"
                         id={props.articleId}
                     />
                 </div>
@@ -73,7 +85,6 @@ const UserArticleCard: React.FC<CardProps> = (props) => {
             <div className={classes.commentsContainer} >
                 <AddCommentActions articleId={props.articleId} />
                 {currentArticleComments.map(comment => {
-                    console.log('currentArticleComments:', currentArticleComments);
                     return < CommentCard
                         key={comment.commentId}
                         authorIdKey={props.authorIdKey}
